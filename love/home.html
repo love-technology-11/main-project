@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Our Story ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ffe0ec, #ffd6e0, #fff0f5);
+    overflow-x: hidden;
+}
+
+/* SECTIONS */
+.section, .section2, .section3, .final-section {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 40px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(60px);
+    transition: 1s;
+}
+
+.section.show,
+.section2.show,
+.section3.show,
+.final-section.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* TITLE */
+h2 {
+    font-size: 44px;
+    margin-bottom: 20px;
+}
+
+/* IMAGE */
+.image-box, .image-box2, .image-left {
+    width: 320px;
+    height: 420px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 20px auto;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    transition: 0.6s;
+}
+
+.image-box:hover,
+.image-box2:hover,
+.image-left:hover {
+    transform: scale(1.05);
+}
+
+.image-box img,
+.image-box2 img,
+.image-left img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* SECTION 3 */
+.content3 {
+    display: flex;
+    gap: 80px;
+    align-items: center;
+    max-width: 1100px;
+}
+
+/* POETRY */
+.poetry {
+    font-size: 22px;
+    line-height: 2;
+    max-width: 650px;
+}
+
+/* BUTTON */
+button {
+    padding: 16px 28px;
+    font-size: 18px;
+    border-radius: 30px;
+    border: none;
+    background: #ff4d6d;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #ff1e4d;
+}
+
+/* INPUT */
+input {
+    width: 320px;
+    padding: 16px;
+    font-size: 18px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+/* NEXT ARROW */
+#nextArrow {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    font-size: 30px;
+    background: #ff4d6d;
+    color: white;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: 0.4s;
+}
+
+#nextArrow.show {
+    opacity: 1;
+}
+
+#nextArrow:hover {
+    transform: scale(1.2);
+}
+
+.hidden {
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SECTION 1 -->
+<div class="section">
+    <div>
+        <h2>Where everything began 💖</h2>
+
+        <div class="image-box">
+            <img src="pic0.jpeg">
+        </div>
+
+        <div class="poetry">
+            On a quiet December day…<br>
+            the world changed without a sound ✨<br><br>
+
+            A tiny heartbeat entered life…<br>
+            but for me,<br>
+            it became my entire universe ❤️<br><br>
+
+            I didn’t know then…<br>
+            one day, you would become my story 💫
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section2">
+    <div>
+        <div class="image-box2">
+            <img src="pic1.jpeg">
+        </div>
+
+        <div class="poetry">
+            The world expected something else…<br>
+            but destiny had its own plan 💫<br><br>
+
+            A surprise… a smile… a miracle 🌸<br><br>
+
+            And slowly,<br>
+            without anyone realizing…<br>
+            you became someone special to me ❤️<br><br>
+
+            Not just a person…<br>
+            but a feeling I never wanted to lose 💖
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section3">
+    <div class="content3">
+
+        <div class="image-left">
+            <img src="pic2.jpeg">
+        </div>
+
+        <div class="poetry">
+            Life moved… cities changed… 🌍<br><br>
+
+            Time passed like a silent breeze…<br>
+            but something always stayed 💫<br><br>
+
+            Years later… paths crossed again…<br><br>
+
+            And in the middle of college chaos…<br>
+            I found you ❤️<br><br>
+
+            Not as a stranger…<br>
+            but as someone my heart already knew 💖
+        </div>
+
+    </div>
+</div>
+
+<!-- FINAL SECTION -->
+<div class="final-section">
+
+    <div id="step1">
+        <button onclick="showStep2()">Do you like this? 💖</button>
+    </div>
+
+    <div id="step2" class="hidden">
+        <h2>That's all... end? 😏</h2>
+        <button id="runBtn">Ok..end</button>
+        <button onclick="showStep3()">Need more</button>
+    </div>
+
+    <div id="step3" class="hidden">
+        <h3>Type secret word 👀</h3>
+        <input type="text" id="secretInput"
+        placeholder="you always scold me with that word 😏">
+        <br><br>
+        <button onclick="checkSecret()">Confirm ❤️</button>
+        <p id="error"></p>
+    </div>
+
+</div>
+
+<!-- NEXT -->
+<div id="nextArrow" onclick="goCollege()">➜</div>
+
+<script>
+
+/* SCROLL ANIMATION */
+const sections = document.querySelectorAll('.section, .section2, .section3, .final-section');
+
+window.addEventListener("scroll", () => {
+    sections.forEach(sec => {
+        const top = sec.getBoundingClientRect().top;
+        if(top < window.innerHeight - 100){
+            sec.classList.add("show");
+        }
+    });
+
+    if(window.scrollY > 200){
+        nextArrow.classList.add("show");
+    }
+});
+
+/* FINAL FLOW */
+function showStep2(){
+    step1.style.display="none";
+    step2.style.display="block";
+}
+
+function showStep3(){
+    step2.style.display="none";
+    step3.style.display="block";
+}
+
+/* ESCAPE BUTTON */
+runBtn.onmouseover=()=>{
+    runBtn.style.position="absolute";
+    runBtn.style.left=Math.random()*window.innerWidth+"px";
+    runBtn.style.top=Math.random()*window.innerHeight+"px";
+}
+
+/* SECRET */
+function checkSecret(){
+    if(secretInput.value.toLowerCase()==="patti"){
+        window.location.href="college.html";
+    } else {
+        error.innerHTML="Wrong 😝 try again";
+    }
+}
+
+/* NEXT PAGE */
+function goCollege(){
+    window.location.href="college.html";
+}
+
+</script>
+
+</body>
+</html>
