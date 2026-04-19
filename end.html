@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>End ❤️</title>
+
+<style>
+body{
+margin:0;
+font-family:'Segoe UI';
+background:linear-gradient(135deg,#ffe0ec,#ffd6e0,#fff0f5);
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+height:100vh;
+text-align:center;
+}
+
+/* BALLOON */
+.balloon{
+width:130px;
+height:160px;
+background:#ff6b6b;
+border-radius:50% 50% 45% 45%;
+position:relative;
+cursor:pointer;
+animation:float 3s ease-in-out infinite;
+}
+
+.balloon::after{
+content:"";
+position:absolute;
+bottom:-40px;
+left:50%;
+width:2px;
+height:40px;
+background:#555;
+transform:translateX(-50%);
+}
+
+@keyframes float{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-20px)}
+}
+
+/* POP */
+.pop{
+animation:pop 0.5s forwards;
+}
+
+@keyframes pop{
+to{
+transform:scale(0);
+opacity:0;
+}
+}
+
+/* CONTENT */
+.content{
+display:none;
+flex-direction:column;
+align-items:center;
+animation:fadeUp 1s ease;
+}
+
+/* MEDIA */
+.media{
+border-radius:20px;
+overflow:hidden;
+box-shadow:0 15px 30px rgba(0,0,0,0.2);
+}
+
+/* IMAGE */
+.media.image{
+width:340px;
+height:460px;
+}
+
+/* LANDSCAPE VIDEO */
+.media.landscape{
+width:520px;
+height:340px;
+}
+
+/* PORTRAIT VIDEO */
+.media.portrait{
+width:300px;
+height:500px;
+}
+
+.media img,
+.media video{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* TEXT */
+.poetry{
+margin-top:20px;
+font-size:20px;
+max-width:520px;
+line-height:1.8;
+}
+
+/* FADE */
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(40px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+/* NEXT ARROW */
+#nextArrow{
+position:fixed;
+bottom:30px;
+right:30px;
+background:#ff4d6d;
+color:white;
+width:60px;
+height:60px;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:24px;
+cursor:pointer;
+opacity:0;
+transition:0.5s;
+}
+
+#nextArrow.show{
+opacity:1;
+}
+
+#nextArrow:hover{
+transform:scale(1.2);
+}
+</style>
+</head>
+
+<body>
+
+<div id="balloon" class="balloon"></div>
+
+<div id="content" class="content">
+    <div id="mediaBox" class="media"></div>
+    <div id="text" class="poetry"></div>
+</div>
+
+<div id="nextArrow" onclick="goNext()">❤️ ➜</div>
+
+<script>
+
+let step = 0;
+
+const data = [
+
+{
+type:"image",
+src:"b1.jpeg",
+text:`That first day… in the temple 🛕<br><br>
+
+It didn’t feel like just a visit…<br>
+it felt peaceful… different… ✨<br><br>
+
+Standing beside you… silently…<br>
+I felt something I never felt before ❤️<br><br>
+
+Maybe that’s where everything started…`
+},
+
+{
+type:"video",
+style:"landscape",
+src:"b2.mp4",
+text:`That auto ride… 🚖<br><br>
+
+Full of laughs… random talks…<br>
+and moments we didn’t even notice passing 😄<br><br>
+
+But somewhere in that ride…<br>
+happiness felt simple…<br>
+because it was with you ❤️`
+},
+
+{
+type:"video",
+style:"landscape",
+src:"b3.mp4",
+text:`My home… my terrace… 🏠<br><br>
+
+Places I’ve seen a hundred times…<br>
+felt completely new that day ✨<br><br>
+
+Because for the first time…<br>
+they had you in them ❤️<br><br>
+
+And suddenly… everything felt complete`
+},
+
+{
+type:"video",
+style:"portrait",
+src:"b4.mp4",
+text:`Those bike rides… 🏍️<br><br>
+
+Between home and hostel…<br>
+roads became memories…<br>
+and every turn had a story 💫<br><br>
+
+We saw the whole city…<br>
+but honestly…<br>
+I was just looking at you ❤️`
+},
+
+{
+type:"video",
+style:"portrait",
+src:"b5.mp4",
+text:`That night ride from college… 🌙<br><br>
+
+Something felt heavy…<br>
+like time was slowly ending…<br><br>
+
+The roads were same…<br>
+but the silence felt different 💔<br><br>
+
+Maybe it was the end of college…<br>
+or maybe…<br>
+I just didn’t want that moment to end ❤️`
+}
+
+];
+
+const balloon = document.getElementById("balloon");
+const content = document.getElementById("content");
+const mediaBox = document.getElementById("mediaBox");
+const text = document.getElementById("text");
+const nextArrow = document.getElementById("nextArrow");
+
+balloon.onclick = () => {
+    balloon.classList.add("pop");
+
+    setTimeout(()=>{
+        balloon.style.display="none";
+        showContent();
+    },400);
+};
+
+function showContent(){
+
+    content.style.display="flex";
+
+    mediaBox.innerHTML="";
+    mediaBox.className="media";
+
+    if(data[step].type === "image"){
+        mediaBox.classList.add("image");
+        mediaBox.innerHTML = `<img src="${data[step].src}">`;
+    } 
+    else {
+        mediaBox.classList.add(data[step].style);
+        mediaBox.innerHTML = `
+        <video autoplay loop muted playsinline>
+            <source src="${data[step].src}" type="video/mp4">
+        </video>`;
+    }
+
+    text.innerHTML = data[step].text;
+}
+
+/* NEXT CLICK */
+content.onclick = () => {
+
+    step++;
+
+    if(step < data.length){
+
+        content.style.display="none";
+
+        setTimeout(()=>{
+            balloon.style.display="block";
+            balloon.classList.remove("pop");
+        },300);
+
+    } else {
+        nextArrow.classList.add("show");
+    }
+};
+
+function goNext(){
+    window.location.href="final.html";
+}
+
+</script>
+
+</body>
+</html>

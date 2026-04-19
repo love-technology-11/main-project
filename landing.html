@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* INTRO SCREEN */
+#intro {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    background: radial-gradient(circle, #1a1a1a, #000);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 36px;
+    letter-spacing: 2px;
+}
+
+/* MAIN */
+#main {
+    display: none;
+    height: 100vh;
+    background: radial-gradient(circle at top, #2a002a, #000);
+    text-align: center;
+    padding-top: 120px;
+    color: white;
+    position: relative;
+}
+
+/* FLOATING HEARTS */
+.heart {
+    position: absolute;
+    color: #ff4d6d;
+    animation: float 10s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* TEXT */
+.fade {
+    opacity: 0;
+    transition: 2s;
+}
+.show {
+    opacity: 1;
+}
+
+.date {
+    font-size: 30px;
+    color: #ffd6e0;
+}
+
+.special {
+    font-size: 42px;
+    color: #ff4d6d;
+    margin-top: 20px;
+}
+
+.poetry {
+    margin-top: 30px;
+    font-size: 20px;
+    line-height: 2;
+    color: #ffe9f3;
+}
+
+/* NEXT ARROW */
+#nextArrow {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    font-size: 34px;
+    color: #ff4d6d;
+    cursor: pointer;
+    opacity: 0;
+    transition: transform 0.3s;
+}
+
+#nextArrow:hover {
+    transform: scale(1.2);
+}
+
+.showArrow {
+    opacity: 1;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 1; }
+    0%,100% { opacity: 0.3; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="intro">
+    <div id="introText"></div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+    <div id="date" class="fade date">10 December 2004</div>
+    <div id="special" class="fade special">A Special Day ❤️</div>
+
+    <div id="poetry" class="fade poetry">
+        A beautiful soul came into this world,<br>
+        like a dream the universe quietly unfurled ✨<br><br>
+
+        Not just a date, not just a time,<br>
+        but the beginning of something divine 💖<br><br>
+
+        Because one day, without warning,<br>
+        you became the reason behind my every morning ❤️
+    </div>
+</div>
+
+<!-- NEXT BUTTON -->
+<div id="nextArrow" onclick="goNext()">❤️➜</div>
+
+<script>
+/* TYPEWRITER */
+let text = "A Special Day...";
+let i = 0;
+
+function typing() {
+    if (i < text.length) {
+        document.getElementById("introText").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typing, 100);
+    } else {
+        setTimeout(startMain, 1500);
+    }
+}
+
+/* MAIN SEQUENCE */
+function startMain() {
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("main").style.display = "block";
+
+    createHearts();
+
+    setTimeout(() => document.getElementById("date").classList.add("show"), 500);
+    setTimeout(() => document.getElementById("special").classList.add("show"), 2000);
+    setTimeout(() => document.getElementById("poetry").classList.add("show"), 3500);
+
+    setTimeout(() => {
+        document.getElementById("nextArrow").classList.add("showArrow");
+    }, 6000);
+}
+
+/* FLOATING HEARTS */
+function createHearts() {
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤️";
+
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (15 + Math.random()*20) + "px";
+
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 10000);
+    }, 300);
+}
+
+/* LINK TO HOME PAGE (WITH FADE) */
+function goNext() {
+    document.body.style.transition = "0.5s";
+    document.body.style.opacity = "0";
+
+    setTimeout(() => {
+        window.location.href = "home.html";
+    }, 500);
+}
+
+typing();
+</script>
+
+</body>
+</html>

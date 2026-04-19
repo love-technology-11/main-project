@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Secret Love Portal 💖</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ffd6e0, #ffe9f3);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Floating hearts */
+.hearts::before {
+    content: "💖 💕 💗 💓 💞";
+    position: fixed;
+    font-size: 20px;
+    animation: float 10s linear infinite;
+    opacity: 0.5;
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh); }
+    100% { transform: translateY(-10vh); }
+}
+
+/* Card */
+.container {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 320px;
+}
+
+/* Input */
+input {
+    width: 80%;
+    padding: 10px;
+    margin: 15px 0;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+/* Button */
+button {
+    background: #ff4d6d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #ff1e4d;
+}
+
+#message {
+    margin-top: 10px;
+}
+
+/* Animations */
+.shake {
+    animation: shake 0.3s;
+}
+@keyframes shake {
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+}
+
+.success {
+    box-shadow: 0 0 20px #ff4d6d;
+}
+</style>
+</head>
+
+<body>
+
+<div class="hearts"></div>
+
+<div class="container" id="box">
+    <h2>💖 Private Love Portal 💖</h2>
+    <p>Only special people can enter 😌</p>
+
+    <input type="password" id="password" placeholder="Enter secret code">
+    <br>
+
+    <label style="font-size:12px;">
+        <input type="checkbox" onclick="togglePassword()"> Show password 👀
+    </label>
+    <br><br>
+
+    <button onclick="checkPassword()">Unlock 💛</button>
+
+    <p id="message"></p>
+    <p style="font-size:12px;">Hint: Something funny 😏</p>
+</div>
+
+<script>
+let tries = 0;
+
+function checkPassword() {
+    const input = document.getElementById("password").value;
+    const message = document.getElementById("message");
+    const box = document.getElementById("box");
+
+    if (input === "69") {
+        message.innerHTML = "Damn 😳 you really know me ❤️";
+        box.classList.add("success");
+
+        setTimeout(() => {
+            window.location.href = "landing.html";
+        }, 1500);
+
+    } else {
+        tries++;
+        box.classList.add("shake");
+        setTimeout(() => box.classList.remove("shake"), 300);
+
+        if (tries === 3) {
+            message.innerHTML = "Okay fine 😤 hint: something naughty 😏";
+            return;
+        }
+
+        const msgs = [
+            "Wrong 😝 try again baby",
+            "Nope 😂 do you even know me?",
+            "Think harder 😌",
+            "You forgot already? 😭",
+            "Our favourite position 🤨"
+        ];
+
+        message.innerHTML = msgs[tries % msgs.length];
+    }
+}
+
+function togglePassword() {
+    const pass = document.getElementById("password");
+    pass.type = pass.type === "password" ? "text" : "password";
+}
+
+document.getElementById("password").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") checkPassword();
+});
+</script>
+
+</body>
+</html>
